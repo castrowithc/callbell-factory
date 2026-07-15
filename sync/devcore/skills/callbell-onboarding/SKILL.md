@@ -17,8 +17,16 @@ work is done, and the user understands the collaboration model. Work in short st
 questions at a time**, write only after confirmation, and explicitly invite the user to ask questions at
 any time.
 
-## 0. Secure progress (first)
-Create `_backlog/task-initial-onboarding.md` right away (template in `__META__/templates/task.md`,
+## 0. Materialize the scaffold, then secure progress (first)
+**If this folder has no callbell scaffold** (no `__META__/`, no `.claude/rules/`), you were started as the
+device-global plugin in a bare folder (ambient mode). Before anything else, lay the scaffold down from the
+plugin root (`${CLAUDE_PLUGIN_ROOT}`) into the current folder: the code template skeleton (`__META__/` with
+its context and template scaffolds, `.claude/rules/`, `AGENTS.md`/`CLAUDE.md`, the zones `_backlog/` and
+`_import/` with their indexes). Only then do the steps below find the files they fill. A folder that already
+carries the scaffold (a template copy) skips this. If `${CLAUDE_PLUGIN_ROOT}` is not resolvable from the
+session, ask the user for the plugin's install path.
+
+Then create `_backlog/task-initial-onboarding.md` right away (template in `__META__/templates/task.md`,
 `status: active`) and add it with one line to the backlog index `_backlog/BACKLOG.md` (the zone is already
 there with its index). Check off the steps in the task file as you go. That way the agent knows the state
 if the user pauses or gets interrupted.
@@ -40,7 +48,8 @@ Ask briefly what the code project is about: purpose, tech stack in broad strokes
 - **Terms:** if a term of the user's own comes up, offer to capture it in `glossary.md`.
 
 ## 3. Fill the scaffolds (after confirmation)
-- `__META__/context/repo.md` with purpose, scope, non-goals, and the people involved.
+- `__META__/context/repo.md` with purpose, scope, non-goals, and the people involved, and set
+  `project-type: code` in its frontmatter (the durable lens the SessionStart hook emits as `PROJECT TYPE`).
 - `__META__/context/roles.md` with your role, the desired agent role, and special rules.
 - For any terms mentioned, `__META__/context/glossary.md`.
 - Point to `__META__/docs/` as the place for project documentation; the root stays the code project.
