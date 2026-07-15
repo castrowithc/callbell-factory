@@ -42,7 +42,7 @@ A source entry declares **`from` + (`kind` | `to`) + optional `templates`**. `mo
 
 ### Sources
 Shared (`sync/all/`, both templates):
-- `sync/all/roots/` — `AGENTS.md`, `CLAUDE.md`, `LICENSE` → template root (kind `roots`)
+- `sync/all/roots/` — `AGENTS.md`, `CLAUDE.md`, `README.md`, `LICENSE` → template root (kind `roots`)
 - `sync/all/rules/` — the shared rules → `.claude/rules/` (kind `rules`)
 - `sync/all/context/` → `__callbell__/context/` (kind `context`)
 - `sync/all/memory/` → `__callbell__/memory/` (kind `memory`)
