@@ -47,18 +47,18 @@ Shared (`sync/all/`, both templates):
 - `sync/all/context/` → `__META__/context/` (kind `context`)
 - `sync/all/memory/` → `__META__/memory/` (kind `memory`)
 - `sync/all/templates/` — shared scaffolds (epic/story/task) → `__META__/templates/` (kind `templates`)
-- `sync/all/skills/` — shared skills (for example `callbell-worktree`) → `.claude/skills/` + `.agents/skills/` (kind `skills`)
+- `sync/all/skills/` — the domain-adaptive skill family (`callbell`, `callbell-review`, `callbell-audit`, `callbell-debt`, `callbell-help`, `callbell-onboarding`) plus `callbell-import` and `callbell-worktree` → `.claude/skills/` + `.agents/skills/` (kind `skills`)
 - `sync/all/hooks/` — `callbell-context.js` → `.claude/hooks/` + `.codex/hooks/` (kind `hooks`)
 - `sync/all/zones/_backlog/BACKLOG.md` → `_backlog/BACKLOG.md` (direct `to`, backlog index; loaded via hook)
 - `sync/all/zones/_import/.gitkeep` → `_import/.gitkeep` (direct `to`, keeps the volatile raw zone ready)
 - `sync/all/gitignore` → `.gitignore` (direct `to`, ignores `_import/` content, keeps the folder)
 
 Only `callbell-devcore` (`templates: ["callbell-devcore"]`):
-- `sync/devcore/skills/` — code skill family + `callbell-onboarding` (kind `skills`)
+- `sync/devcore/skills/` — `callbell-gain`, the domain-unique code skill (kind `skills`)
 - `sync/devcore/docs/` → `__META__/docs/` (direct `to`, the template's docs root)
 
 Only `callbell-opscore` (`templates: ["callbell-opscore"]`):
-- `sync/opscore/skills/` — ops skill family + `callbell-onboarding` (kind `skills`)
+- `sync/opscore/skills/` — `callbell-filing`, the domain-unique ops skill (kind `skills`)
 - `sync/opscore/rules/` — `callbell-structure` (kind `rules`)
 - `sync/opscore/templates/` — ops scaffolds (customer patterns) → `__META__/templates/` (kind `templates`; mixes with the shared scaffolds in the same target)
 - `sync/opscore/framework.md` → `framework.md` (direct `to`, the template's root framework)
@@ -90,8 +90,8 @@ The hook (`callbell-context.js`) is **harness-compatible** and is registered twi
 
 Both harnesses inject SessionStart stdout as context; `AGENTS.md` stays minimal (no flat embedding needed).
 
-`skills`: the same SKILL.md format applies to both harnesses, but the storage differs: Claude reads project skills from `.claude/skills/`, **Codex exclusively from `.agents/skills/`** (a `.codex/skills/` does not exist). That is why the kind `skills` fans each source out into both targets. Skills are **template-scoped**: the code family lives in `sync/devcore/skills/` (devcore only), the ops family in `sync/opscore/skills/` (opscore only); shared skills (for example `callbell-worktree`) in `sync/all/skills/`.
+`skills`: the same SKILL.md format applies to both harnesses, but the storage differs: Claude reads project skills from `.claude/skills/`, **Codex exclusively from `.agents/skills/`** (a `.codex/skills/` does not exist). That is why the kind `skills` fans each source out into both targets. Most skills are **domain-adaptive** and shared in `sync/all/skills/`: they read the `PROJECT TYPE` lens (emitted by the hook) at runtime and adapt to code or ops. Only the **domain-unique** skills stay template-scoped: `callbell-gain` in `sync/devcore/skills/` (devcore only), `callbell-filing` in `sync/opscore/skills/` (opscore only).
 
-`Procedures are skills, not commands`: onboarding (per template) and worktree are **pure skills**. A user-invocable skill appears in Claude as `/name` **and** in Codex as `@name`, so the command UX stays intact across harnesses. The templates no longer ship a `.claude/commands/` folder. The onboarding skills carry `disable-model-invocation: true` (one-time setup, never automatic); worktree stays without this flag so the agent may proactively suggest it during parallel work.
+`Procedures are skills, not commands`: onboarding (shared, domain-adaptive) and worktree are **pure skills**. A user-invocable skill appears in Claude as `/name` **and** in Codex as `@name`, so the command UX stays intact across harnesses. The templates no longer ship a `.claude/commands/` folder. The onboarding skills carry `disable-model-invocation: true` (one-time setup, never automatic); worktree stays without this flag so the agent may proactively suggest it during parallel work.
 
 `harness/`: the only harness-specific level. `sync/harness/claude/settings.json` (compatible with `.claude`) and `sync/harness/codex/hooks.json` (compatible with `.codex`) are adapter singletons with direct `to`.

@@ -11,7 +11,7 @@ edit: locked
 # Structure: the Placement Invariants
 
 These rules always apply. The full procedure (placement, thresholds, promotion) lives in the skill
-`callbell-ops-filing` and is read only when you actually file or move a file.
+`callbell-filing` and is read only when you actually file or move a file.
 
 **Two levels in the root.** The root separates cleanly. The **operational level** is the flat area
 folders `<area>-<topic>` (for example `business-finance/`, `personal-gaming/`) plus the zones `_import/`,

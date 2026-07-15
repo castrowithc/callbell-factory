@@ -20,7 +20,7 @@ structured way, creates and maintains it, and manages what the user sets out. Th
 - The path says WHERE something lives; the frontmatter says WHAT it is. No duplication.
 - `status` drives maturity (`draft → active`), not the folder.
 - Depth grows lazily: flat first, a sublevel only from the second element of the same kind.
-- The details of placement come from the skill `callbell-ops-filing` (read when filing).
+- The details of placement come from the skill `callbell-filing` (read when filing).
 
 ## Area registry
 The single source of truth for which areas and topics exist. The agent uses only what is here and invents

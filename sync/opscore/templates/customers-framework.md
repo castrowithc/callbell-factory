@@ -23,7 +23,7 @@ and adapt it. It describes how work is done in the customer area. -->
 ## Filing per customer
 - `<id>/index.md`: the customer's master record (short name, status, what it is about). **No** contact
   data.
-- Cases, facts, decisions as typed files under `<id>/` (see `callbell-ops-filing`).
+- Cases, facts, decisions as typed files under `<id>/` (see `callbell-filing`).
 
 ## Data guardrails
 - **No contact data** (address, phone, email, payment data) in the repo, not even when it is posted by

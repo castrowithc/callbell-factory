@@ -5,6 +5,7 @@ description: >
   Loaded automatically into context at session start.
 type: meta
 edit: locked
+# project-type: code|ops  # the lens; onboarding sets it, the SessionStart hook emits it as PROJECT TYPE
 ---
 
 # Repo
