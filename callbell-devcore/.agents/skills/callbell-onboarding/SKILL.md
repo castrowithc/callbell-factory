@@ -65,6 +65,11 @@ Explain briefly how work is done together:
 
 ## 6. Wrap-up
 - If no Git repo is initialized yet, point it out and offer to run `git init` (only after confirmation).
+- Git identity (before the first commit): if `git config user.name`/`user.email` is unset, ask which name
+  and email the commits should carry — usually the user's GitHub username and their GitHub no-reply/alias
+  email — and offer to set it globally (`git config --global`, applies to all their repos; the friendly
+  default when they have none) or only for this repo. Never use a harness or session identity, and never
+  invent one (see `callbell-git`).
 - Summarize what was set up and what the user can do next.
 - Set `task-initial-onboarding.md` to `status: final`, move it into `_backlog/done/`, and remove its line
   from `_backlog/BACKLOG.md` (the index lists only active work).
