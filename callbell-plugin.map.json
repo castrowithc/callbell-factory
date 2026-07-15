@@ -1,0 +1,21 @@
+{
+  "output": "callbell-plugin",
+  "sources": [
+    { "from": "sync/all/skills/",                     "to": "skills/" },
+    { "from": "sync/devcore/skills/callbell-gain/",   "to": "skills/callbell-gain/" },
+    { "from": "sync/opscore/skills/callbell-filing/", "to": "skills/callbell-filing/" },
+
+    { "from": "sync/all/hooks/callbell-context.js",   "to": "hooks/callbell-context.js" },
+    { "from": "sync/plugin/hooks/callbell-hooks.json", "to": "hooks/callbell-hooks.json" },
+
+    { "from": "sync/all/rules/",                      "to": "rules/" },
+    { "from": "sync/opscore/rules/",                  "to": "rules/" },
+    { "from": "sync/all/roots/AGENTS.md",             "to": "AGENTS.md" },
+
+    { "from": "sync/plugin/claude/plugin.json",       "to": ".claude-plugin/plugin.json" },
+    { "from": "sync/plugin/claude/marketplace.json",  "to": ".claude-plugin/marketplace.json" },
+    { "from": "sync/plugin/codex/plugin.json",        "to": ".codex-plugin/plugin.json" },
+    { "from": "sync/plugin/codex/marketplace.json",   "to": ".agents/plugins/marketplace.json" }
+  ],
+  "version_stamp": [".claude-plugin/plugin.json", ".codex-plugin/plugin.json"]
+}
