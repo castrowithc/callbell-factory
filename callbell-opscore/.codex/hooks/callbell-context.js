@@ -81,7 +81,7 @@ if (fs.existsSync(langFile)) {
   const langBody = bodyOf(langFile);
   if (langBody) blocks.push('Your interaction language (from _user-language.md):\n' + langBody);
 } else {
-  blocks.push('No _user-language.md set. Before other work, ask the user which language to use for chat replies and for your visible reasoning, then create _user-language.md from _user-language.example.md. Content written into repo files stays project-governed, not set here.');
+  blocks.push('No _user-language.md set. Before other work, ask the user which language to use for chat replies and for your visible reasoning, then create _user-language.md from _user-language.example.md. Content written into repo files stays project-governed, not set here. A missing _user-language.md usually means the repo was just copied from the template — offer to run /callbell-onboarding for the one-time setup.');
 }
 
 const contextFiles = collect(path.join(root, '__META__', 'context'));

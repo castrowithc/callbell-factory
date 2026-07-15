@@ -36,6 +36,6 @@ These names are **exclusive in the working tree**: a real fixed-function file is
 `framework.md` or `index.md`, never prefixed. That keeps the cascade fast and unambiguous: a `framework.md`
 or `index.md` at any level of the tree is always a real node, read it. A **scaffold** for one of these
 files lives only in `__META__/templates/` and is named with its target as a suffix
-(`customers-framework.md`, `customer-index.md`), never the bare reserved name. The suffix says what the
+(`project-index.md`, for example), never the bare reserved name. The suffix says what the
 scaffold becomes and keeps it out of the node scan, because its name is not exactly `framework.md` or
 `index.md`.
