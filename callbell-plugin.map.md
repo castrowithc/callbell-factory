@@ -53,8 +53,8 @@ folder (ambient mode) from `${CLAUDE_PLUGIN_ROOT}`. It carries **only project st
 of the rules, skills, hook, or ruleset: those are device-global and the hook injects them (project-local
 wins, so nothing double-loads). Each entry is a direct route from the **existing** sync source (single
 source, no duplication), gathered under the skill:
-- `sync/all/context/` + `sync/all/memory/` + `sync/all/templates/` -> `scaffold/__META__/{context,memory,templates}/`.
-- `sync/all/zones/_backlog/BACKLOG.md` + `sync/all/zones/_import/.gitkeep` -> `scaffold/{_backlog,_import}/`.
+- `sync/all/context/` + `sync/all/memory/` + `sync/all/templates/` -> `scaffold/__callbell__/{context,memory,templates}/`.
+- `sync/all/zones/_backlog/BACKLOG.md` + `sync/all/zones/_import/.gitkeep` -> `scaffold/__callbell__/{_backlog,_import}/`.
 - `sync/all/gitignore` -> `scaffold/gitignore` (no dot in the bundle, so it is inert there; the skill lays
   it down as `.gitignore`).
 - `sync/all/roots/_user-language.example.md` -> `scaffold/_user-language.example.md`.
@@ -71,7 +71,7 @@ publish so `/plugin marketplace update` and `codex plugin marketplace upgrade` a
 
 ## Not in the plugin as active state
 
-The plugin root carries no live project state: no top-level `__META__/`, no zones, no root `framework.md`.
+The plugin root carries no live project state: no top-level `__callbell__/`, no zones, no root `framework.md`.
 A plugin is device-global, not a project (see `factory-integration.md` section 6). The one exception is the
 **dormant** copy under `skills/callbell-onboarding/scaffold/` (above): it is not read as plugin state, it is
 the source `callbell-onboarding` materializes into a folder when a user turns ambient mode into a real

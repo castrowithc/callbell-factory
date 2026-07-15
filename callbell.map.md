@@ -34,9 +34,9 @@ A source entry declares **`from` + (`kind` | `to`) + optional `templates`**. `mo
 |---|---|---|
 | `roots` | Template root directly (`spread: "root"`) | both (native file) |
 | `rules` | `.claude/rules/` | Claude natively; Codex via hook (`--rules`) from the same source |
-| `context` | `__META__/context/` | both (injected via hook) |
-| `memory` | `__META__/memory/` | both (index injected via hook) |
-| `templates` | `__META__/templates/` | both (on demand) |
+| `context` | `__callbell__/context/` | both (injected via hook) |
+| `memory` | `__callbell__/memory/` | both (index injected via hook) |
+| `templates` | `__callbell__/templates/` | both (on demand) |
 | `skills` | `.claude/skills/` **and** `.agents/skills/` | Claude **and** Codex |
 | `hooks` | `.claude/hooks/` **and** `.codex/hooks/` | Claude **and** Codex |
 
@@ -44,24 +44,24 @@ A source entry declares **`from` + (`kind` | `to`) + optional `templates`**. `mo
 Shared (`sync/all/`, both templates):
 - `sync/all/roots/` — `AGENTS.md`, `CLAUDE.md`, `LICENSE`, `_user-language.example.md` → template root (kind `roots`)
 - `sync/all/rules/` — the shared rules → `.claude/rules/` (kind `rules`)
-- `sync/all/context/` → `__META__/context/` (kind `context`)
-- `sync/all/memory/` → `__META__/memory/` (kind `memory`)
-- `sync/all/templates/` — shared scaffolds (epic/story/task) → `__META__/templates/` (kind `templates`)
+- `sync/all/context/` → `__callbell__/context/` (kind `context`)
+- `sync/all/memory/` → `__callbell__/memory/` (kind `memory`)
+- `sync/all/templates/` — shared scaffolds (epic/story/task) → `__callbell__/templates/` (kind `templates`)
 - `sync/all/skills/` — the domain-adaptive skill family (`callbell`, `callbell-review`, `callbell-audit`, `callbell-debt`, `callbell-help`, `callbell-onboarding`) plus `callbell-import` and `callbell-worktree` → `.claude/skills/` + `.agents/skills/` (kind `skills`)
 - `sync/all/hooks/` — `callbell-context.js` → `.claude/hooks/` + `.codex/hooks/` (kind `hooks`)
-- `sync/all/zones/_backlog/BACKLOG.md` → `_backlog/BACKLOG.md` (direct `to`, backlog index; loaded via hook)
-- `sync/all/zones/_import/.gitkeep` → `_import/.gitkeep` (direct `to`, keeps the volatile raw zone ready)
-- `sync/all/gitignore` → `.gitignore` (direct `to`, ignores `_import/` content, keeps the folder)
+- `sync/all/zones/_backlog/BACKLOG.md` → `__callbell__/_backlog/BACKLOG.md` (direct `to`, backlog index; loaded via hook)
+- `sync/all/zones/_import/.gitkeep` → `__callbell__/_import/.gitkeep` (direct `to`, keeps the volatile raw zone ready)
+- `sync/all/gitignore` → `.gitignore` (direct `to`, ignores `__callbell__/_import/` content, keeps the folder)
 
 Only `callbell-devcore` (`templates: ["callbell-devcore"]`):
 - `sync/devcore/skills/` — `callbell-gain`, the domain-unique code skill (kind `skills`)
-- `sync/devcore/docs/` → `__META__/docs/` (direct `to`, the template's docs root)
+- `sync/devcore/docs/` → `__callbell__/docs/` (direct `to`, the template's docs root)
 
 Only `callbell-opscore` (`templates: ["callbell-opscore"]`):
 - `sync/opscore/skills/` — `callbell-filing`, the domain-unique ops skill (kind `skills`)
 - `sync/opscore/rules/` — `callbell-structure` (kind `rules`)
-- `sync/opscore/templates/` — ops scaffolds (customer patterns) → `__META__/templates/` (kind `templates`; mixes with the shared scaffolds in the same target)
-- `sync/opscore/framework.md` → `framework.md` (direct `to`, the template's root framework)
+- `sync/opscore/templates/` — ops scaffolds (customer patterns) → `__callbell__/templates/` (kind `templates`; mixes with the shared scaffolds in the same target)
+- `sync/opscore/framework.md` → `__callbell__/framework.md` (direct `to`, the ops root framework/registry)
 
 Harness adapters (`sync/harness/`, across templates, direct `to`):
 - `sync/harness/claude/settings.json` → `.claude/settings.json` (Claude)
@@ -71,21 +71,21 @@ Harness adapters (`sync/harness/`, across templates, direct `to`):
 
 `roots`: the template's `AGENTS.md`/`CLAUDE.md` come from `sync/all/roots/` and land via `spread: "root"` directly in the template root (same name, no rebuild). The roots stay deliberately minimal (context comes via the hook).
 
-`context`: within `__META__/`, the SessionStart hook injects a deliberately narrow set: `__META__/context/`, the memory index `__META__/memory/MEMORY.md`, **and** the backlog index `_backlog/BACKLOG.md`, not all of `__META__/` (the root `_user-language.md` is read on top of this, see below). The individual backlog files, templates, and deeper `framework.md` stay on demand (cascade), not always-on context.
+`context`: within `__callbell__/`, the SessionStart hook injects a deliberately narrow set: `__callbell__/context/`, the memory index `__callbell__/memory/MEMORY.md`, **and** the backlog index `__callbell__/_backlog/BACKLOG.md`, not all of `__callbell__/` (the root `_user-language.md` is read on top of this, see below). The individual backlog files, templates, and deeper `framework.md` stay on demand (cascade), not always-on context.
 
 `user-language`: each user's interaction language (chat + visible reasoning) lives in the root file `_user-language.md` (gitignored), with `_user-language.example.md` as the committed template (shipped via kind `roots`). The SessionStart hook reads it in addition to the context above, and prompts setup when it is missing. This is deliberately per-user, unlike the language of repo content, which stays project-governed (`repo.md`, area rules) so shared output does not vary by who is editing.
 
-`zones`: `_backlog/` and `_import/` are ready from the start, `_export/` stays on demand.
-- `_backlog/` ships with its **index `BACKLOG.md`**: the hook loads it at session start like the memory index, so the open work state is present right away. The **entries** in it (epic/story/task) come into being lazily with their first file; the templates for them live in `__META__/templates/`. Operational logic: rule `callbell-backlog`.
-- `_import/` is ready as a volatile raw zone (via `.gitkeep`); the template `.gitignore` ignores its content but keeps the folder. So the user can drop raw inputs right away without them being versioned. Consumed originals move into the archive `_import/processed/<yyyy-mm>/` (monthly, also ignored). The ingest flow (recognize, convert, redact, file, archive) is the skill `callbell-import`; redaction is governed by `callbell-data-protection`. Operational logic: rule `callbell-zones`.
-- `_export/` stays **unseeded** and comes into being only when the human requests a deliverable (the agent files nothing here on its own). The template `.gitignore` ignores `_export/` like `_import/`: deliverables often carry real, unredacted data that must never be versioned. Operational logic: rule `callbell-zones`.
+`zones`: `__callbell__/_backlog/` and `__callbell__/_import/` are ready from the start, `__callbell__/_export/` stays on demand.
+- `__callbell__/_backlog/` ships with its **index `BACKLOG.md`**: the hook loads it at session start like the memory index, so the open work state is present right away. The **entries** in it (epic/story/task) come into being lazily with their first file; the templates for them live in `__callbell__/templates/`. Operational logic: rule `callbell-backlog`.
+- `__callbell__/_import/` is ready as a volatile raw zone (via `.gitkeep`); the template `.gitignore` ignores its content but keeps the folder. So the user can drop raw inputs right away without them being versioned. Consumed originals move into the archive `__callbell__/_import/processed/<yyyy-mm>/` (monthly, also ignored). The ingest flow (recognize, convert, redact, file, archive) is the skill `callbell-import`; redaction is governed by `callbell-data-protection`. Operational logic: rule `callbell-zones`.
+- `__callbell__/_export/` stays **unseeded** and comes into being only when the human requests a deliverable (the agent files nothing here on its own). The template `.gitignore` ignores `__callbell__/_export/` like `__callbell__/_import/`: deliverables often carry real, unredacted data that must never be versioned. Operational logic: rule `callbell-zones`.
 
-`rules` live **not** in `__META__`, but natively in `.claude/rules/` (source: `sync/all/rules/`, opscore addition `sync/opscore/rules/`):
+`rules` live **not** in `__callbell__`, but natively in `.claude/rules/` (source: `sync/all/rules/`, opscore addition `sync/opscore/rules/`):
 - **Claude**: reads `.claude/rules/` natively. Claude's `rules/` is path-specific (`paths:` frontmatter); the norm files have `paths: ["**/*"]`, so they apply globally. NOT via the hook (otherwise duplicate context).
 - **Codex**: has no Markdown rules folder (`.codex/rules/` is a Starlark *security* mechanism for command execution, not for norms). That is why the Codex hook (`--rules`) additionally injects the norms from `.claude/rules/`.
 
 The hook (`callbell-context.js`) is **harness-compatible** and is registered twice:
-- **Claude**: `.claude/settings.json` -> `.claude/hooks/callbell-context.js` (root via `$CLAUDE_PROJECT_DIR`). Injects `__META__/context/` + memory index.
+- **Claude**: `.claude/settings.json` -> `.claude/hooks/callbell-context.js` (root via `$CLAUDE_PROJECT_DIR`). Injects `__callbell__/context/` + memory index.
 - **Codex**: `.codex/hooks.json` -> `.codex/hooks/callbell-context.js --rules` (root via stdin `cwd`). Injects context **and** norms from `.claude/rules/`. Codex loads the project-local `.codex/` layer only when the project is **trusted** (a one-time trust prompt on first open).
 
 Both harnesses inject SessionStart stdout as context; `AGENTS.md` stays minimal (no flat embedding needed).
