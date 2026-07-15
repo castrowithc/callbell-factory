@@ -57,9 +57,9 @@ It never overwrites the file from its own prior knowledge. This holds most stron
 
 | `type` | Meaning |
 |---|---|
-| `epic` | A large theme or undertaking. It holds its stories and tasks **inline** in the same file. |
-| `story` | A package of work within an epic. It carries the `epic:` key when it belongs to an epic, and holds its tasks **inline**. |
-| `task` | A single operational step. Usually **inline** in a `story-*.md` (the norm) or an `epic-*.md` (rare). A standalone `task-*.md` exists only for an independent task with no epic or story attached. |
+| `epic` | A large undertaking, broken into stories. Its **own file** `epic-*.md`; it rosters its stories in the body and does not hold them inline. Done when its stories are done (see `callbell-backlog`). |
+| `story` | A self-contained unit of value ("as a role I want a function, so that a benefit"). Its **own file** `story-*.md`; carries the `epic:` key when it belongs to an epic, and holds its **tasks inline**. |
+| `task` | A single operative or technical step, **inline** in its `story-*.md`. A standalone `task-*.md` exists only when the task is genuinely independent of any epic or story (then it carries neither field), not by size. |
 
 The **memory system** is a standalone subsystem with a fixed location (`__META__/memory/`), governed by
 `callbell-memory` and opened up through the index `MEMORY.md`. It is not a filing decision, so it does not

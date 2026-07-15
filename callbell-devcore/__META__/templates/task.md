@@ -10,8 +10,9 @@ tags: []
 
 # Task: <Title>
 
-<!-- Template. A separate task file exists only for a STANDALONE task with no epic or
-story attached. If the task belongs to an epic or story, it lives INLINE there (see callbell-backlog).
+<!-- Template. A standalone task-<slug>.md exists ONLY for a task that is genuinely independent of any
+epic or story (then it carries NEITHER an epic nor a story field), not by size. If the task belongs to a
+story, it lives INLINE in that story-<slug>.md, not here (see callbell-backlog).
 Copy it to _backlog/task-<slug>.md and fill it in. -->
 
 ## What to do

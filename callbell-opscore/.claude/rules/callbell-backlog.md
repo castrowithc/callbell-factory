@@ -46,15 +46,29 @@ status and a short description.
 - **One line per active root entry** and **one line per project** (`- [Title](path) - status, short
   state`), the project line pointing to its `index.md`. A project's own epics, stories, and tasks are
   rostered in that project's `index.md`, not repeated here, so the overview stays lean and the cascade
-  runs `BACKLOG.md` -> project `index.md` -> the entry.
+  runs `BACKLOG.md` -> project `index.md` -> `epic-<slug>.md` -> `story-<slug>.md`.
 - The agent **maintains it**: a new root entry or project means a new line; a status change or a
   completion updates or removes the line. It shows only active work; finished work drops out.
 
-## Inline model
-- An **epic** holds its stories and tasks **inline in the same file**.
-- A **story** carries the `epic:` slug (when it belongs to an epic) and holds its tasks **inline**.
-- A standalone **`task-<slug>.md`** exists only for an independent task with no epic or story attached;
-  otherwise the task lives inline. The `epic:` key (on a story) is the only linkage.
+## File model
+The three levels come from the agile Scrum framing (a proven tool, even if epic/story/task are not fixed
+Scrum parts): the **epic** is the large undertaking, the **story** is one self-contained unit of value
+("as a role I want a function, so that a benefit"), the **task** is the concrete operative or technical
+step. Each level is its **own file**, so a single file stays small enough to read on its own. A project of
+three epics and fifty stories must never be one giant file the agent has to read in full just to check off
+one task.
+
+- An **epic** is always its own file `epic-<slug>.md`. It does **not** hold stories inline: it states the
+  goal and **rosters its stories** in the body as links (`- [Story: <title>](story-<slug>.md) - status`).
+  It is done when its stories are done, and it may grow or be reprioritized.
+- A **story** is always its own file `story-<slug>.md`. It carries the `epic:` slug when it belongs to an
+  epic (empty when it stands alone) and holds its **tasks inline** as the task checklist.
+- A **task** lives **inline in its story**. A standalone `task-<slug>.md` exists **only** when the task is
+  genuinely independent of any epic or story (then it carries **neither** an `epic` nor a `story` field).
+  This is about independence, **not** size.
+- **Linkage is the `epic:` up-link on the story, plus body rosters** (the project `index.md` rosters its
+  epics and any standalone stories/tasks; each epic rosters its stories). There is deliberately **no**
+  down-link field, so nothing has to be kept in sync in two places (see `callbell-references`).
 
 ## Status, not moving
 A backlog entry matures **in place** through `status` (`draft -> active -> final -> archived`). There is no
