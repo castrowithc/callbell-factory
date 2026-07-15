@@ -42,7 +42,7 @@ A source entry declares **`from` + (`kind` | `to`) + optional `templates`**. `mo
 
 ### Sources
 Shared (`sync/all/`, both templates):
-- `sync/all/roots/` — `AGENTS.md`, `CLAUDE.md`, `LICENSE`, `_user-language.example.md` → template root (kind `roots`)
+- `sync/all/roots/` — `AGENTS.md`, `CLAUDE.md`, `LICENSE` → template root (kind `roots`)
 - `sync/all/rules/` — the shared rules → `.claude/rules/` (kind `rules`)
 - `sync/all/context/` → `__callbell__/context/` (kind `context`)
 - `sync/all/memory/` → `__callbell__/memory/` (kind `memory`)
@@ -71,9 +71,9 @@ Harness adapters (`sync/harness/`, across templates, direct `to`):
 
 `roots`: the template's `AGENTS.md`/`CLAUDE.md` come from `sync/all/roots/` and land via `spread: "root"` directly in the template root (same name, no rebuild). The roots stay deliberately minimal (context comes via the hook).
 
-`context`: within `__callbell__/`, the SessionStart hook injects a deliberately narrow set: `__callbell__/context/`, the memory index `__callbell__/memory/MEMORY.md`, **and** the backlog index `__callbell__/_backlog/BACKLOG.md`, not all of `__callbell__/` (the root `_user-language.md` is read on top of this, see below). The individual backlog files, templates, and deeper `framework.md` stay on demand (cascade), not always-on context.
+`context`: within `__callbell__/`, the SessionStart hook injects a deliberately narrow set: `__callbell__/context/`, the memory index `__callbell__/memory/MEMORY.md`, **and** the backlog index `__callbell__/_backlog/BACKLOG.md`, not all of `__callbell__/`. The individual backlog files, templates, and deeper `framework.md` stay on demand (cascade), not always-on context.
 
-`user-language`: each user's interaction language (chat + visible reasoning) lives in the root file `_user-language.md` (gitignored), with `_user-language.example.md` as the committed template (shipped via kind `roots`). The SessionStart hook reads it in addition to the context above, and prompts setup when it is missing. This is deliberately per-user, unlike the language of repo content, which stays project-governed (`repo.md`, area rules) so shared output does not vary by who is editing.
+`language`: the interaction language (chat + visible reasoning) is set during `/callbell-onboarding` and written into the root `AGENTS.md` (which `CLAUDE.md` imports), so both harnesses load it natively, no hook injection. It is committed with the repo (shared, fitting the solo audience), replacing the former per-user `_user-language.md`, which is gone. The language of **repo content** is a separate axis, the structure language, recorded in `repo.md` and asked during onboarding.
 
 `zones`: `__callbell__/_backlog/` and `__callbell__/_import/` are ready from the start, `__callbell__/_export/` stays on demand.
 - `__callbell__/_backlog/` ships with its **index `BACKLOG.md`**: the hook loads it at session start like the memory index, so the open work state is present right away. The **entries** in it (epic/story/task) come into being lazily with their first file; the templates for them live in `__callbell__/templates/`. Operational logic: rule `callbell-backlog`.

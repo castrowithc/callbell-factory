@@ -57,7 +57,6 @@ source, no duplication), gathered under the skill:
 - `sync/all/zones/_backlog/BACKLOG.md` + `sync/all/zones/_import/.gitkeep` -> `scaffold/__callbell__/{_backlog,_import}/`.
 - `sync/all/gitignore` -> `scaffold/gitignore` (no dot in the bundle, so it is inert there; the skill lays
   it down as `.gitignore`).
-- `sync/all/roots/_user-language.example.md` -> `scaffold/_user-language.example.md`.
 - Lens extras under `scaffold/_lens/`, placed by the skill per the lens: `sync/opscore/framework.md` and
   `sync/opscore/templates/` -> `_lens/ops/` (ops root `framework.md` + customer scaffolds);
   `sync/devcore/docs/framework.md` -> `_lens/code/docs/` (code docs framework).

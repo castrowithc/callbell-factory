@@ -18,7 +18,6 @@
     { "from": "sync/all/zones/_backlog/BACKLOG.md",       "to": "skills/callbell-onboarding/scaffold/__callbell__/_backlog/BACKLOG.md" },
     { "from": "sync/all/zones/_import/.gitkeep",          "to": "skills/callbell-onboarding/scaffold/__callbell__/_import/.gitkeep" },
     { "from": "sync/all/gitignore",                       "to": "skills/callbell-onboarding/scaffold/gitignore" },
-    { "from": "sync/all/roots/_user-language.example.md", "to": "skills/callbell-onboarding/scaffold/_user-language.example.md" },
     { "from": "sync/opscore/framework.md",                "to": "skills/callbell-onboarding/scaffold/_lens/ops/framework.md" },
     { "from": "sync/opscore/templates/",                  "to": "skills/callbell-onboarding/scaffold/_lens/ops/templates/" },
     { "from": "sync/devcore/docs/framework.md",           "to": "skills/callbell-onboarding/scaffold/_lens/code/docs/framework.md" },
