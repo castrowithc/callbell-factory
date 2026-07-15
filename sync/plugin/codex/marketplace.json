@@ -3,7 +3,7 @@
   "interface": { "displayName": "Callbell" },
   "plugins": [
     { "name": "callbell",
-      "source": { "source": "url", "url": "https://github.com/<owner>/callbell.git", "ref": "main" },
+      "source": { "source": "url", "url": "https://github.com/castrowithc/callbell.git", "ref": "main" },
       "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
       "category": "Productivity" }
   ]
