@@ -5,7 +5,6 @@ edit: shared
 status: active
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
-tags: []
 ---
 
 # <short name> (<id>)

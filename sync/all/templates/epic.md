@@ -2,10 +2,9 @@
 description: <What is this epic about? One sentence.>
 type: epic
 edit: shared
-status: active        # draft | active | final | archived
+status: draft         # draft | active | final | archived
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
-tags: []
 ---
 
 # Epic: <Title>

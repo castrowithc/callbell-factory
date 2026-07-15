@@ -2,11 +2,10 @@
 description: <What is this story about? One sentence.>
 type: story
 edit: shared
-status: active        # draft | active | final | archived
+status: draft         # draft | active | final | archived
 epic: ""              # slug of the epic this story belongs to; empty when it stands alone
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
-tags: []
 ---
 
 # Story: <Title>

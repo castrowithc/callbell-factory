@@ -2,10 +2,9 @@
 description: <What is this task about? One sentence.>
 type: task
 edit: shared
-status: active        # draft | active | final | archived
+status: draft         # draft | active | final | archived
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
-tags: []
 ---
 
 # Task: <Title>
