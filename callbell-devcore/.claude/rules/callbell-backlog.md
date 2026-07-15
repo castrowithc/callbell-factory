@@ -1,9 +1,9 @@
 ---
 paths: ["**/*"]
 description: >
-  How the operational backlog is kept: the flat root as default, projects as optional folders, epics,
-  stories, and tasks by the inline model, status instead of moving folders, completion into a local done/.
-  Backbone, applies in every repo.
+  How the operational backlog is kept: the flat root as default, projects as optional folders, epics and
+  stories as separate files with tasks inline in the story, status instead of moving folders, completion
+  into a local done/. Backbone, applies in every repo.
 type: rule
 edit: locked
 ---
