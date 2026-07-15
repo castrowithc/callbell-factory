@@ -46,6 +46,22 @@ ops at runtime.
 - `sync/plugin/codex/plugin.json` -> `.codex-plugin/plugin.json`
 - `sync/plugin/codex/marketplace.json` -> `.agents/plugins/marketplace.json`
 
+### Onboarding scaffold (project state, for ambient -> project)
+The plugin bundles the **project scaffold** inside the onboarding skill, at
+`skills/callbell-onboarding/scaffold/`, so `callbell-onboarding` can materialize a real project into a bare
+folder (ambient mode) from `${CLAUDE_PLUGIN_ROOT}`. It carries **only project state**, never a second copy
+of the rules, skills, hook, or ruleset: those are device-global and the hook injects them (project-local
+wins, so nothing double-loads). Each entry is a direct route from the **existing** sync source (single
+source, no duplication), gathered under the skill:
+- `sync/all/context/` + `sync/all/memory/` + `sync/all/templates/` -> `scaffold/__META__/{context,memory,templates}/`.
+- `sync/all/zones/_backlog/BACKLOG.md` + `sync/all/zones/_import/.gitkeep` -> `scaffold/{_backlog,_import}/`.
+- `sync/all/gitignore` -> `scaffold/gitignore` (no dot in the bundle, so it is inert there; the skill lays
+  it down as `.gitignore`).
+- `sync/all/roots/_user-language.example.md` -> `scaffold/_user-language.example.md`.
+- Lens extras under `scaffold/_lens/`, placed by the skill per the lens: `sync/opscore/framework.md` and
+  `sync/opscore/templates/` -> `_lens/ops/` (ops root `framework.md` + customer scaffolds);
+  `sync/devcore/docs/framework.md` -> `_lens/code/docs/` (code docs framework).
+
 ## Version stamp
 
 `version_stamp` lists the two manifests. `callbell-plugin-sync.js` stamps their `version` field with the
@@ -53,11 +69,13 @@ version from its argument, else the factory `VERSION` file, else it leaves the m
 value is replaced in place, formatting preserved). `callbell-publish.js` bumps `VERSION` (patch) on every
 publish so `/plugin marketplace update` and `codex plugin marketplace upgrade` actually pull the change.
 
-## Not in the plugin
+## Not in the plugin as active state
 
-No project-scaffold state: no `__META__/`, no zones, no `framework.md`, no project roots. Those are
-template-only (a plugin is device-global, not a project, see `factory-integration.md` section 6). Onboarding
-materializes that scaffold into a folder when a user turns ambient mode into a real project.
+The plugin root carries no live project state: no top-level `__META__/`, no zones, no root `framework.md`.
+A plugin is device-global, not a project (see `factory-integration.md` section 6). The one exception is the
+**dormant** copy under `skills/callbell-onboarding/scaffold/` (above): it is not read as plugin state, it is
+the source `callbell-onboarding` materializes into a folder when a user turns ambient mode into a real
+project.
 
 ## Publish
 

@@ -12,6 +12,17 @@
     { "from": "sync/opscore/rules/",                  "to": "rules/" },
     { "from": "sync/all/roots/AGENTS.md",             "to": "AGENTS.md" },
 
+    { "from": "sync/all/context/",                        "to": "skills/callbell-onboarding/scaffold/__META__/context/" },
+    { "from": "sync/all/memory/",                         "to": "skills/callbell-onboarding/scaffold/__META__/memory/" },
+    { "from": "sync/all/templates/",                      "to": "skills/callbell-onboarding/scaffold/__META__/templates/" },
+    { "from": "sync/all/zones/_backlog/BACKLOG.md",       "to": "skills/callbell-onboarding/scaffold/_backlog/BACKLOG.md" },
+    { "from": "sync/all/zones/_import/.gitkeep",          "to": "skills/callbell-onboarding/scaffold/_import/.gitkeep" },
+    { "from": "sync/all/gitignore",                       "to": "skills/callbell-onboarding/scaffold/gitignore" },
+    { "from": "sync/all/roots/_user-language.example.md", "to": "skills/callbell-onboarding/scaffold/_user-language.example.md" },
+    { "from": "sync/opscore/framework.md",                "to": "skills/callbell-onboarding/scaffold/_lens/ops/framework.md" },
+    { "from": "sync/opscore/templates/",                  "to": "skills/callbell-onboarding/scaffold/_lens/ops/templates/" },
+    { "from": "sync/devcore/docs/framework.md",           "to": "skills/callbell-onboarding/scaffold/_lens/code/docs/framework.md" },
+
     { "from": "sync/plugin/claude/plugin.json",       "to": ".claude-plugin/plugin.json" },
     { "from": "sync/plugin/claude/marketplace.json",  "to": ".claude-plugin/marketplace.json" },
     { "from": "sync/plugin/codex/plugin.json",        "to": ".codex-plugin/plugin.json" },
