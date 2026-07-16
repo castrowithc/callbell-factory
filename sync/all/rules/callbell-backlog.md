@@ -51,5 +51,10 @@ task and one line per project** (`- [Title](path) - status, short state`), the p
 `index.md`. The agent maintains it; finished work drops out.
 
 ## Templates
-Scaffolds for new entries live in `__callbell__/templates/` (`task.md`, `project-index.md`). Copy from
-there, do not reinvent.
+Scaffolds live in `__callbell__/templates/`. Copy from there, do not reinvent. A scaffold is **renamed as
+it is copied**, because it never carries a reserved name itself (see `callbell-conventions`):
+
+| Scaffold | Becomes |
+|---|---|
+| `task.md` | `__callbell__/backlog/task-<slug>.md`, or `<project>/task-<slug>.md` |
+| `project-index.md` | `__callbell__/backlog/<project>/index.md` |
