@@ -25,12 +25,13 @@ resolved by the shared `scripts/map-resolve.js` (a `to`-source is echoed unchang
 no template filter apply in this channel.
 
 ### Skills (flat, across template scopes)
-- `sync/all/skills/` -> `skills/` — the domain-adaptive family plus `callbell-import` and `callbell-worktree`.
+- `sync/all/skills/` -> `skills/` — the domain-adaptive family plus `callbell-import`, `callbell-worktree`,
+  and `callbell-plan`.
 - `sync/devcore/skills/callbell-gain/` -> `skills/callbell-gain/` — the code-only skill, pulled in because a
   device-global plugin also serves code repos.
 - `sync/opscore/skills/callbell-filing/` -> `skills/callbell-filing/` — the ops-only skill, same reason.
 
-All ten skills land in one flat `skills/`; the lens (`PROJECT TYPE`, emitted by the hook) decides code vs
+All eleven skills land in one flat `skills/`; the lens (`PROJECT TYPE`, emitted by the hook) decides code vs
 ops at runtime.
 
 ### Always-on payload (for ambient mode)
@@ -72,7 +73,7 @@ publish so `/plugin marketplace update` and `codex plugin marketplace upgrade` a
 ## Not in the plugin as active state
 
 The plugin root carries no live project state: no top-level `__callbell__/`, no zones, no root `framework.md`.
-A plugin is device-global, not a project (see `factory-integration.md` section 6). The one exception is the
+A plugin is device-global, not a project. The one exception is the
 **dormant** copy under `skills/callbell-onboarding/scaffold/` (above): it is not read as plugin state, it is
 the source `callbell-onboarding` materializes into a folder when a user turns ambient mode into a real
 project.
