@@ -46,8 +46,8 @@ Shared (`sync/all/`, both templates):
 - `sync/all/rules/` — the shared rules → `.claude/rules/` (kind `rules`)
 - `sync/all/context/` → `__callbell__/context/` (kind `context`)
 - `sync/all/memory/` → `__callbell__/memory/` (kind `memory`)
-- `sync/all/templates/` — shared scaffolds (epic/story/task) → `__callbell__/templates/` (kind `templates`)
-- `sync/all/skills/` — the domain-adaptive skill family (`callbell`, `callbell-review`, `callbell-audit`, `callbell-debt`, `callbell-help`, `callbell-onboarding`) plus `callbell-import` and `callbell-worktree` → `.claude/skills/` + `.agents/skills/` (kind `skills`)
+- `sync/all/templates/` — shared scaffolds (`task.md`, `project-index.md`) → `__callbell__/templates/` (kind `templates`)
+- `sync/all/skills/` — the domain-adaptive skill family (`callbell`, `callbell-review`, `callbell-audit`, `callbell-debt`, `callbell-help`, `callbell-onboarding`) plus `callbell-import`, `callbell-worktree`, and `callbell-plan` → `.claude/skills/` + `.agents/skills/` (kind `skills`)
 - `sync/all/hooks/` — `callbell-context.js` → `.claude/hooks/` + `.codex/hooks/` (kind `hooks`)
 - `sync/all/zones/backlog/BACKLOG.md` → `__callbell__/backlog/BACKLOG.md` (direct `to`, backlog index; loaded via hook)
 - `sync/all/zones/zone-import/.gitkeep` → `__callbell__/zone-import/.gitkeep` (direct `to`, keeps the volatile raw zone ready)
@@ -78,7 +78,7 @@ Harness adapters (`sync/harness/`, across templates, direct `to`):
 `language`: the interaction language (chat + visible reasoning) is set during `/callbell-onboarding` and written into the user's **machine-local** harness instructions (Claude `~/.claude/CLAUDE.md`, Codex `~/.codex/AGENTS.md`), never into the repo: it is a per-user, cross-project property, so it is not committed or shared. Onboarding writes a single plain line and only when none is present yet. The language of **repo content** is a separate axis, the structure language, recorded in `repo.md` and asked during onboarding.
 
 `zones & backlog`: `__callbell__/backlog/` (versioned managed state), `__callbell__/zone-import/`, and `__callbell__/zone-export/` (the two volatile zones) are all ready from the start (seeded).
-- `__callbell__/backlog/` ships with its **index `BACKLOG.md`**: the hook loads it at session start like the memory index, so the open work state is present right away. The **entries** in it (epic/story/task) come into being lazily with their first file; the templates for them live in `__callbell__/templates/`. Operational logic: rule `callbell-backlog`.
+- `__callbell__/backlog/` ships with its **index `BACKLOG.md`**: the hook loads it at session start like the memory index, so the open work state is present right away. The **entries** in it (tasks, optionally grouped into a project folder) come into being lazily with their first file; the templates for them live in `__callbell__/templates/`. Operational logic: rule `callbell-backlog`; planning and cutting work is the skill `callbell-plan`.
 - `__callbell__/zone-import/` is ready as a volatile raw zone (via `.gitkeep`); the template `.gitignore` ignores its content but keeps the folder. So the user can drop raw inputs right away without them being versioned. Consumed originals move into the archive `__callbell__/zone-import/processed/<yyyy-mm>/` (monthly, also ignored). The ingest flow (recognize, convert, redact, file, archive) is the skill `callbell-import`; redaction is governed by `callbell-data-protection`. Operational logic: rule `callbell-zones`.
 - `__callbell__/zone-export/` is **seeded** (kept through `.gitkeep`) but the agent files nothing here on its own; it fills only when the human requests a deliverable. The template `.gitignore` ignores `__callbell__/zone-export/` content like `__callbell__/zone-import/`: deliverables often carry real, unredacted data that must never be versioned. Operational logic: rule `callbell-zones`.
 
