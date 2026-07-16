@@ -17,8 +17,10 @@
     { "from": "sync/all/templates/", "kind": "templates" },
     { "from": "sync/all/skills/",    "kind": "skills" },
     { "from": "sync/all/hooks/",     "kind": "hooks" },
-    { "from": "sync/all/zones/_backlog/BACKLOG.md", "to": "__callbell__/_backlog/BACKLOG.md" },
-    { "from": "sync/all/zones/_import/.gitkeep",     "to": "__callbell__/_import/.gitkeep" },
+    { "from": "sync/all/zones/backlog/BACKLOG.md", "to": "__callbell__/backlog/BACKLOG.md" },
+    { "from": "sync/all/zones/zone-import/.gitkeep",     "to": "__callbell__/zone-import/.gitkeep" },
+    { "from": "sync/all/zones/zone-export/.gitkeep",     "to": "__callbell__/zone-export/.gitkeep" },
+    { "from": "sync/all/callbell-readme.md",        "to": "__callbell__/README.md" },
     { "from": "sync/all/gitignore",                  "to": ".gitignore" },
 
     { "from": "sync/devcore/skills/", "kind": "skills", "templates": ["callbell-devcore"] },

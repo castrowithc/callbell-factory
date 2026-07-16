@@ -54,7 +54,8 @@ of the rules, skills, hook, or ruleset: those are device-global and the hook inj
 wins, so nothing double-loads). Each entry is a direct route from the **existing** sync source (single
 source, no duplication), gathered under the skill:
 - `sync/all/context/` + `sync/all/memory/` + `sync/all/templates/` -> `scaffold/__callbell__/{context,memory,templates}/`.
-- `sync/all/zones/_backlog/BACKLOG.md` + `sync/all/zones/_import/.gitkeep` -> `scaffold/__callbell__/{_backlog,_import}/`.
+- `sync/all/zones/backlog/BACKLOG.md` + `sync/all/zones/zone-import/.gitkeep` + `sync/all/zones/zone-export/.gitkeep` -> `scaffold/__callbell__/{backlog,zone-import,zone-export}/`.
+- `sync/all/callbell-readme.md` -> `scaffold/__callbell__/README.md` (the layer's structural header, the single source the onboarding deep-dive reads from).
 - `sync/all/gitignore` -> `scaffold/gitignore` (no dot in the bundle, so it is inert there; the skill lays
   it down as `.gitignore`).
 - Lens extras under `scaffold/_lens/`, placed by the skill per the lens: `sync/opscore/framework.md` and
