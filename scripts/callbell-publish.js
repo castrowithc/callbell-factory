@@ -1,25 +1,22 @@
 #!/usr/bin/env node
 'use strict';
 
-// Fabrik-Publish: regeneriert die Vorlagen UND das Plugin und pusht jedes in sein eigenes Repo.
+// Fabrik-Publish: regeneriert das Plugin und pusht es in sein eigenes Repo.
 // Orchestriert nur — die Bausteine bleiben single-source:
-//   1. callbell-sync.js         verteilt sync/ in die Vorlagen (mirror/seed, kein Prune)
-//   2. callbell-plugin-sync.js  baut callbell-plugin/ (Version aus VERSION, hier je Publish gebumpt)
-//   3. callbell-verify.js + callbell-plugin-verify.js  Guards: brechen bei Abweichung ab -> KEIN Push
-//   4. je Ziel (Vorlagen + Plugin): git add/commit/push in dessen eigenem Repo (Ordner = nested Git-Repo)
+//   1. callbell-plugin-sync.js    baut callbell-plugin/ (Version aus VERSION, hier je Publish gebumpt)
+//   2. callbell-plugin-verify.js  Guard: bricht bei Abweichung ab -> KEIN Push
+//   3. git add/commit/push in callbell-plugin/ (Ordner = nested Git-Repo mit eigenem Remote)
 //
 // Bootstrap-tolerant (Remote kommt spaeter):
 //   kein .git          -> uebersprungen, Hinweis "Bootstrap ausstehend"
 //   .git ohne Remote   -> lokal committet, Push uebersprungen
 //   .git mit Remote    -> committet + gepusht
-// Aufraeumen von STALE laeuft kontrolliert ueber /callbell-template-review (mit Freigabe).
 
 const { execFileSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const map = JSON.parse(fs.readFileSync(path.join(ROOT, 'callbell.map.json'), 'utf8'));
 const pluginMap = JSON.parse(fs.readFileSync(path.join(ROOT, 'callbell-plugin.map.json'), 'utf8'));
 
 // Kind-Node-Script mit durchgereichtem stdout/stderr; wirft bei Exit-Code != 0.
@@ -50,10 +47,9 @@ function bumpVersion() {
   return next;
 }
 
-// --- 1. Sync (Vorlagen + Plugin) --------------------------------------------
+// --- 1. Sync -----------------------------------------------------------------
 console.log('== Sync ==');
 try {
-  runNode('callbell-sync.js');
   const version = bumpVersion();
   runNode('callbell-plugin-sync.js', [version]);
 } catch {
@@ -61,14 +57,12 @@ try {
   process.exit(1);
 }
 
-// --- 2. Verify-Guards --------------------------------------------------------
+// --- 2. Verify-Guard ---------------------------------------------------------
 console.log('\n== Verify (Guard) ==');
 try {
-  runNode('callbell-verify.js');
   runNode('callbell-plugin-verify.js');
 } catch {
-  console.error('\nPublish abgebrochen: Vorlagen oder Plugin weichen von der Map ab (FEHLT/STALE).');
-  console.error('Raeume kontrolliert auf mit  /callbell-template-review  und publishe danach erneut.');
+  console.error('\nPublish abgebrochen: Das Plugin weicht von der Map ab (FEHLT/STALE).');
   process.exit(1);
 }
 
@@ -90,7 +84,7 @@ function pushRepo(dir) {
   }
 }
 
-// Ein Ziel-Repo publishen (Vorlage oder Plugin), bootstrap-tolerant.
+// Das Plugin-Repo publishen, bootstrap-tolerant.
 function publishRepo(label, dir) {
   if (!fs.existsSync(path.join(dir, '.git'))) {
     console.log(`  - ${label}: uebersprungen (kein eigenes Repo — Bootstrap ausstehend: git init + remote)`);
@@ -126,7 +120,6 @@ function publishRepo(label, dir) {
 }
 
 console.log('\n== Publish ==');
-for (const template of map.templates) publishRepo(template, path.join(ROOT, template));
 publishRepo(pluginMap.output, path.join(ROOT, pluginMap.output));
 
 console.log(`\nFertig. ${tally.pushed} gepusht, ${tally.committed} lokal committet, ${tally.unchanged} unveraendert, ${tally.skipped} uebersprungen.`);

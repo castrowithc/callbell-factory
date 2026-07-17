@@ -5,53 +5,49 @@
 **One expert, surrounded by experts.** You are the expert; the agents and subagents are experts who work
 for you. And the communication between them is **lazy**: the leanest solution that actually holds, not
 effort on spec. The name is the metaphor, a **call bell** (the service bell on a counter): you ring, the
-experts come. That is why everything the template ships carries the `callbell` prefix.
+experts come. That is why everything callbell ships carries the `callbell` prefix.
 
-Callbell is **not** limited to coding. It is a frame for agentic solo work, in two flavors.
+Callbell is **not** limited to coding. It is a frame for agentic solo work, for devs and non-devs alike.
 
-## The two templates
+## One plugin
 
-| Template | For whom | For what |
-|---|---|---|
-| **callbell-devcore** | Solo devs | Pure code projects. Copy the folder and get going. |
-| **callbell-opscore** | Solo entrepreneurs, non-devs | Operational, Markdown-heavy work: Personal OS, Business OS, Wiki & Docs. |
+Callbell is a **plugin**, installed once per device and active in every folder. It carries the skills, the
+norms, and a session hook that supplies the context. There is nothing to copy and nothing to choose.
 
-Both share a common backbone (conventions, frontmatter, zones, backlog, memory, data protection, Git) and
-differ in what their domain needs: dev gets the lazy code family, opscore gets the lazy ops family plus the
-filing system.
+The plugin serves both kinds of work from one install. A session hook resolves the **lens** at runtime:
+whether a repo is primarily executable code or primarily markdown steering a topic. The lazy skill family
+reads that lens and adapts. Code projects get the code flavor, operational work (personal OS, business OS,
+wiki and docs) gets the ops flavor plus the filing system, and the backbone underneath is shared:
+conventions, frontmatter, zones, backlog, memory, data protection, Git.
 
 ## Usage
 
-1. **Copy** the right template (`callbell-devcore/` or `callbell-opscore/`) to its destination.
-2. Optionally `git init`.
-3. Run `/callbell-onboarding`: the agent walks you through the setup, fills the context, and explains how
-   the two of you work together. After that the repo is ready to work.
-
-A template is only a **starting point**. You extend it: your own skills, rules, and structure, and you can
-carry skills from one project to another.
+1. **Install** the plugin from the marketplace.
+2. Work. The skills and norms are active immediately, in any folder.
+3. Optionally run `/callbell-onboarding`: the agent walks you through the setup and lays down a persistent
+   project scaffold (context, memory, backlog, zones). Laying down a scaffold is a deliberate act, so it is
+   never automatic.
 
 ## The `callbell` namespace
 
-`callbell-*` is **reserved** for the skills and rules the template ships. Domain tools carry a segment:
+`callbell-*` is **reserved** for the skills and rules the plugin ships. Domain tools carry a segment:
 `callbell-code-*` (code) and `callbell-ops-*` (ops). The lazy flagship mode is simply called `callbell` and
-is flavored per template.
+flavors itself by the lens.
 
-Put your **own** skills **outside** this prefix (your own name or your own prefix). That way template and
+Put your **own** skills **outside** this prefix (your own name or your own prefix). That way plugin and
 user skills stay distinguishable at all times, even when you mix them across projects.
 
 ## Factory mechanics (this repo)
 
-`callbell-factory` is the **factory** that produces both templates. The single source of truth is the
-`sync/` folder plus `callbell.map.json` (machine readable) and `callbell.map.md` (human readable); both are
-equal in standing and are always maintained together.
+`callbell-factory` is the **factory** that assembles the plugin. The single source of truth is the `sync/`
+folder plus `callbell-plugin.map.json` (machine readable) and `callbell-plugin.map.md` (human readable);
+both are equal in standing and are always maintained together.
 
-- `node scripts/callbell-sync.js` distributes `sync/` into the templates according to the map (`mirror` =
-  overwrite, `seed` = create only when missing, no prune).
-- `node scripts/callbell-verify.js` checks each template against the map (`FEHLT`/`STALE`), with the exit
-  code as a guard.
+- `node scripts/callbell-plugin-sync.js` assembles `sync/` into `callbell-plugin/` according to the map.
+- `node scripts/callbell-plugin-verify.js` checks the output against the map, with the exit code as a guard.
 
-Changes to synchronized content are made **only** in `sync/`, never directly in a template folder (those
-get overwritten on sync).
+Changes to synchronized content are made **only** in `sync/`, never directly in `callbell-plugin/` (that
+gets overwritten on sync).
 
 ## License
 

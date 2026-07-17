@@ -1,6 +1,4 @@
-# Generated outputs: regenerated from sync/, each bootstrapped into its own repo on publish.
-callbell-devcore/
-callbell-opscore/
+# Generated output: regenerated from sync/, bootstrapped into its own repo on publish.
 callbell-plugin/
 
 node_modules/
